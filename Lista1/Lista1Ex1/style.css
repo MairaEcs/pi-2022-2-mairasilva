@@ -1,0 +1,29 @@
+.container{
+    margin: 0 auto;
+    width: fit-content;
+    border: 1px solid #626B73;
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+    background-color: #FFFFE0;
+}
+
+div{
+    text-align: center;
+    border: 1px solid #626B73;
+    width: 2.5vw;
+}
+
+.azul{
+    text-align: center;
+    background-color: #ADD8E6;
+}
+
+.verde{
+    text-align: center;
+    background-color: #90EE90;
+}
+
+.vermelho{
+    text-align: center;
+    background-color: #F08080;
+}

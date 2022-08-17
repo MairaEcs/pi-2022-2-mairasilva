@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Formulário</h1>
+    <form action="index.php" method="post">
+        <label for="nome">Nome</label><br>
+        <input type="text" name="nome" id="idnome"><br>
+
+        <label for="senha">Senha</label><br>
+        <input type="password" name="senha" id="idsenha">
+
+        <label for="sexo">Sexo:</label>
+        <input type="radio" name="sexo[]" id="idsexo1" value="masculino">
+        <label for="masculino">Masculino</label>
+        <input type="radio" name="sexo[]" id="idsexo2" value="feminino">
+        <label for="feminino">Feminino</label><br>
+        
+        <label for="profissao">Profissões:</label>
+        <input type="checkbox" id="idprofissao1" name="profissao[]" value="Professor(a)">
+        <label for="professor">Professor(a)</label>
+        <input type="checkbox" id="idprofissao2" name="profissao[]" value="Arquiteto(a)">
+        <label for="arquiteto">Arquiteto(a)</label>
+        <input type="checkbox" id="idprofissao4" name="profissao[]" value="Enfermeiro(a)">
+        <label for="enfermeiro">Enfermeiro(a)</label>
+        <input type="checkbox" id="idprofissao5" name="profissao[]" value="Outro">
+        <label for="outro">Outro</label><br>
+        
+        <label for="cidade">Cidade</label><br>
+        <input type="text" name="cidade" id="idcidade">
+
+        <label  for="estado">Estado</label>
+        <select name="estado" id="idestado">
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+        </select><br>
+
+        <label for="descricao">Descrição</label><br>
+        <input type="textarea" name="descricao" id="iddescricao"><br>
+
+        <input type="submit" value="Enviar" id="idenviar">
+      </form>
+</body>
+</html>

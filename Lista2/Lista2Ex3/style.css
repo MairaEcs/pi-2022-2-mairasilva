@@ -1,0 +1,33 @@
+*{
+    margin: 0 auto;
+    width: fit-content;
+}
+
+h2{
+    margin-top: 3vh;
+    margin-bottom: 1vh;
+}
+
+input{
+    margin: 2%;
+}
+
+#container{
+    background-color: #17A2B8;
+    border: 1px solid black;
+    width: 30vw;
+    padding-bottom: 5%;
+    height: fit-content;
+    margin-top: 2vh;
+}
+
+.recados{
+    text-align: center;
+    background-color: #F8F9FA;
+    /*background-color: #17A2B8;*/
+    width: 20vw;
+}
+
+#idmensagem{
+    height: 10vh;
+}

@@ -1,0 +1,43 @@
+*{
+    margin: 0 auto;
+    width: fit-content;
+}
+
+h1{
+    margin-top: 10vh;
+    border: 1px solid black;
+}
+
+form{
+    margin-top: 5vh; /*20*/
+    padding: 3%;
+    background-color: antiquewhite;
+}
+
+/*label{
+    margin: 1%;
+    margin-left: 3%;
+}*/
+
+input{
+    margin-bottom: 2%;
+    
+}
+
+#idnome{
+    width: 45vw;
+}
+
+#idsenha, #idcidade{
+    width: 22vw;
+    margin-right: 4%;
+}
+
+#iddescricao{
+    width: 45vw;
+    height: 10vh;
+}
+
+/*#idenviar{
+    width: 10vw;
+}*/
