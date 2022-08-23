@@ -1,0 +1,56 @@
+*{
+    margin: 0 auto;
+    width: fit-content;
+}
+
+#idform{
+    border: 1px solid #bebebe;
+    margin-top: 20vh;
+    background-color: #F2F2F2;
+    padding: 3%;
+    width: 30vw;
+}
+
+#idnome, #idmensagem{
+    width: 28vw;
+    margin-bottom: 2%;
+}
+
+#idmensagem{
+    height: 10vh;
+}
+
+#idenviar{
+    background-color: #28A745;
+    border: none;
+    color: #dcdfe2;
+    height: 5vh;
+    cursor: pointer;
+    margin-left: 28%;
+}
+
+h2{
+    margin-top: 3vh;
+}
+
+#container{
+    background-color: #17A2B8;
+    border: 1px solid #0b6775;
+    width: 60vw;
+    padding-bottom: 5%;
+    height: fit-content;
+    margin-top: 2vh;
+}
+
+.quant-msg{
+    padding-top: 1%;
+    padding-bottom: 2%;
+}
+
+.recados{
+    text-align: center;
+    border: 1px solid #bebebe;
+    background-color: #F2F2F2;
+    width: 50vw;
+    /*dashed dotted*/
+}
