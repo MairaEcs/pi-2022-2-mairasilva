@@ -1,0 +1,74 @@
+*{
+    margin: 0 auto;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+}
+
+body{
+    background-color: #e0e0e0;
+}
+
+#container-login{
+    width: 30vw;
+    height: 30vh;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #e3eb89;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin-top: 25vh;
+    padding-top: 5vh;
+    padding-left: 5%;
+    padding-right: 5%;
+    text-align: center;
+}
+
+h1{
+    margin-bottom: 5vh;
+}
+
+#nome{
+    width: 35vh;
+    height: 4vh;
+}
+
+#entrar{
+    margin-top: 5vh;
+    height: 4vh;
+    cursor: pointer;
+}
+
+#container-chat{
+    margin: 0 auto;
+    width: 75vw;
+    height: 75vh;
+    margin-top: 10vh;
+    background: #e3eb89;;
+    border-radius: 5px;
+    display: flex;
+}
+
+#lista{
+    border-right: 1px solid rgb(255, 255, 255);
+    width: 30%;
+    height: 100%;
+}
+
+#chat{
+    width: 70%;
+    height: 100%;
+}
+
+#cabecalho{
+    border-bottom: 1px solid rgb(255, 255, 255);
+    height: 8vh;
+    padding: 1%;
+}
+
+#corpo-mensagens{
+    border-bottom: 1px solid rgb(255, 255, 255);
+    height: 55vh;
+}
+
+#enviar-mensagens{
+    padding: 1%;
+}
