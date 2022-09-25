@@ -1,172 +1,135 @@
 var socket = io();
 
-var nome;
+var nome = document.getElementById('nome');
 var user;
+var para = 'todos';
+var chat;
+
+//const users = [];
+//var userList = new Set();
 
 function setUsername(){ // btn entrar 
-    nome = document.getElementById('nome').value;
-    socket.emit('setUsername', nome);
-};
+    if(nome.value.trim()){
+        socket.emit('setUsername', nome.value);
+    }
+    
+}
 
-socket.on('userSet', function(data){
+socket.on('userSet', (data) => {
     user = data.username;
-    //anotheruser = data.other;
+
     if(user){
         document.body.innerHTML = 
         `<div id="container-chat">
             <div id="lista">
-                <div class="${user}">
-                    <input type="text" name="nome" value="${user}" disabled>
-                </div>
             </div>
             <div id="chat">
-                <div id="cabecalho">
-                </div>
+                <div id="cabecalho">todos</div>
                 <div id="corpo-mensagens"></div>
+                <div id="digitando-mensagens"></div>
                 <div id="enviar-mensagens">
-                    <input type="text" name="" id="mensagem" placeholder="Digite uma mensagem">
-                    <button type="button" name="" id="enviar" onclick="sendMessage()">Enviar</button>
+                    <textarea name="" id="area-mensagem" placeholder="Digite sua mensagem aqui ${user}..." rows="3"></textarea>
+                    <button type="button" name="" id="enviar" onclick="sendMessage()"><i class="fa-regular fa-paper-plane"></i></button>
                 </div>
             </div>
         </div>`;
+
+        var mensagem = document.getElementById('area-mensagem');
+
+        mensagem.addEventListener("keypress", () => {
+            socket.emit("typing", nome.value);
+        });
+
+        chat = document.getElementById('corpo-mensagens');
     }
+
 });
 
-socket.on('list', function(data){ // lista de usuários
-    var lista = document.getElementById('lista').innerHTML;
-    lista += 
-    `<div class="${data}" onClick="clicarUsuario(this)">
-        <input type="text" name="nome" value="${data}" disabled>
+socket.on('list', (data) => { // lista de usuários
+    var lista = document.getElementById('lista');
+    var usuariosLista = "";
+    
+    usuariosLista = 
+    `<div class="todos" onClick="clicarUsuario(this)">
+        <input type="text" name="nome" value="todos" disabled>
     </div>`;
-    document.getElementById('lista').innerHTML = lista;
+
+    data.forEach((item, index) => {
+        
+        if(item == nome.value){
+            usuariosLista += 
+            `<div class="${item}">
+                <input type="text" name="nome" value="${item} (yourself)" disabled>
+            </div>`;
+        }else{
+            usuariosLista += 
+            `<div class="${item}" onClick="clicarUsuario(this)">
+                <input type="text" name="nome" value="${item}" disabled>
+            </div>`;
+        }
+        
+    });
+    
+    lista.innerHTML = usuariosLista;
 });
 
 let clicarUsuario = (e) => {
-    var getClass = e.className;
-
-    //var salaNome = $("."+getClass).children("input").val();
-    document.getElementById('cabecalho').innerHTML = getClass;
     
-};
+    para = e.className;
+    document.getElementById('cabecalho').innerHTML = para;
+
+    chat.innerHTML = "";    
+}
 
 let userDisconnected = (e) => {
-    socket.emit('messageDisconnected', `${nome} desconectou-se do chat`);
-};
+    socket.emit('messageDisconnected', `${nome.value} desconectou-se do chat`);
+
+}
 
 function sendMessage(){
-    var msg = document.getElementById('mensagem').value;
+    var msg = document.getElementById('area-mensagem').value;
     if(msg){
-        socket.emit('msg', {message: msg, user: user});
-        document.getElementById('mensagem').value = '';
+        socket.emit('chat message', {user: user, para: para, message: msg});
+        document.getElementById('area-mensagem').value = '';
     }
+
+    var corpoMensagem = document.getElementById('corpo-mensagens');
+
+    corpoMensagem.scrollTo(0, corpoMensagem.scrollHeight);
+
 }
 
-socket.on('newmsg', function(data){
-    if(user){
-        var chat = document.getElementById('corpo-mensagens').innerHTML;
-        chat += '<div><b>' + data.user + '</b>: ' + data.message + '</div>';
-        document.getElementById('corpo-mensagens').innerHTML = chat;
+socket.on('chat message', (data) => {
+    if((data.para == para && data.user == user) || (data.para == user && data.user == para) && para != 'todos'){
+        chat.innerHTML += '<div class="mensagem"><b>' + data.user + ' - </b>' + data.message + '</div>';
+        
+    }else if(para == 'todos' && data.para == 'todos'){
+        chat.innerHTML += '<div class="mensagem"><b>' + data.user + ' - </b>' + data.message + '</div>';
     }
-})
+    //console.log(chat);
+});
 
-socket.on('messageConnected', function(data){ // messagem usuário conectado
+socket.on('messageConnected', (data) => { // messagem usuário conectado
     var chat = document.getElementById('corpo-mensagens').innerHTML;
-    chat += `<p>${data} conectou-se no chat</p>`;
+    chat += `<p class="estado-usuario">${data} conectou-se no chat</p>`;
+    document.getElementById('corpo-mensagens').innerHTML = chat;
+
+    initReactiveProperties(data);
+    this.users.push(data);
+
+    socket.emit('list', data);
+
+});
+
+socket.on('messageDisconnected', (data) => { // messagem usuário desconectado
+    var chat = document.getElementById('corpo-mensagens').innerHTML;
+    chat += `<p class="estado-usuario">${data}</p>`;
     document.getElementById('corpo-mensagens').innerHTML = chat;
 });
 
-socket.on('messageDisconnected', function(data){ // messagem usuário desconectado
-    //console.log(data.user);
-    var chat = document.getElementById('corpo-mensagens').innerHTML;
-    chat += `<p>${data}</p>`;
-    document.getElementById('corpo-mensagens').innerHTML = chat;
+socket.on("typing", (data) => {
+    document.getElementById('digitando-mensagens').innerHTML = `<p id="digitando">${data} está digitando...</p>`;
+    setTimeout(() => {
+        document.getElementById('digitando').innerHTML = "";
+    }, 3000);
 });
-
-
-/*socket.on('message', function(data){
-    console.log(data.user);
-    //digitando();
-
-    //chat.scrollTop = chat.scrollHeight;
-    var chat = document.getElementById('corpo-mensagens').innerHTML;
-    chat += `<p><b>${user}:</b> ${msg}</p>`;
-    document.getElementById('corpo-mensagens').innerHTML = chat;
-});*/
-
-
-/*function list(){
-    var nome = document.getElementById('nome').value;
-    socket.emit('setUsername', nome);
-    var msg = document.getElementById('mensagem').value;
-    if(msg){
-        socket.emit('msg', {message: msg, user: user});
-        document.getElementById('mensagem').value = '';
-    }
-}
-
-socket.on('userList', function(data){
-    if(user){
-        console.log(data.user);
-        var chat = document.getElementById('corpo-mensagens').innerHTML;
-        chat += '<div><b>' + data.user + '</b>: ' + data.message + '</div>';
-        document.getElementById('corpo-mensagens').innerHTML = chat;
-    }
-})*/
-
-/*var socket = io();
-
-//var user = document.getElementById('nome');
-var user = window.location.search.slice(6);
-console.log(user);
-
-var btn = document.getElementById('enviar');
-var msg = document.getElementById('mensagem');
-
-var chat = document.getElementById('corpo-mensagens');
-
-// escutando evento no front
-socket.on('message', function(user, msg){
-    console.log(user, msg);
-    outputMessage(user, msg);
-    //digitando();
-
-    //chat.scrollTop = chat.scrollHeight;
-    /*var chat = document.getElementById('corpo-mensagens').innerHTML;
-    chat += `<p><b>${user}:</b> ${msg}</p>`;
-    document.getElementById('corpo-mensagens').innerHTML = chat;
-});
-
-btn.addEventListener('click', function(e) {
-    e.preventDefault();
-
-    //const msg = e.target.elements.mensagem.value;
-    
-    if(msg.value){
-        //console.log(msg);
-        socket.emit('chat message', msg.value, user.value);
-        //user.value = '';
-        msg.value = '';
-        msg.focus();
-    }
-    
-    
-});
-
-// mensagem para os usuários conectados quando um novo usuário se conectar/desconectar.
-
-function outputMessage(user, msg){
-    //const divMessage = document.createElement('div');
-    //divMessage.classList.add('mensagem-enviadas');
-    //divMessage.innerHTML = `<p>${msg}</p>`;
-    var chat = document.getElementById('corpo-mensagens').innerHTML;
-    chat += `<div><p><b>${user}</b>${msg}</p></div>`;
-    document.getElementById('corpo-mensagens').innerHTML = chat;
-}
-
-/*
-onkeyup="digitando()"
-function digitando(){
-    var chat = document.getElementById('corpo-mensagens').innerHTML;
-    chat += `<div><p>Usuário está digitando...</p></div>`;
-    document.getElementById('corpo-mensagens').innerHTML = chat;
-}*/

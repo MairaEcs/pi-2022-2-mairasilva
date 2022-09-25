@@ -58,17 +58,63 @@ h1{
     height: 100%;
 }
 
+#lista div > input{
+    width: 92%;
+    height: 7vh;
+    padding: 3%;
+    cursor: pointer;
+}
+
 #cabecalho{
     border-bottom: 1px solid rgb(255, 255, 255);
-    height: 8vh;
+    height: 5.5vh;
     padding: 1%;
+    padding-top: 4vh;
 }
 
 #corpo-mensagens{
-    border-bottom: 1px solid rgb(255, 255, 255);
-    height: 55vh;
+    height: 45vh;
+    padding: 1%;
+    overflow-y: scroll;
+}
+
+#corpo-mensagens::-webkit-scrollbar {
+    display: none;               
+}
+
+#digitando-mensagens{
+    padding: 1%;
+    height: 4vh;
 }
 
 #enviar-mensagens{
+    border-top: 1px solid rgb(255, 255, 255);
     padding: 1%;
+    display: flex;
+}
+
+#area-mensagem{
+    margin-top: 1vh;
+    width: 88%;
+    height: 7vh;
+    border: none;
+    resize: none;
+}
+
+#enviar{
+    width: 7vh;
+    height: 7vh;
+    cursor: pointer;
+    padding: 1%;
+    margin-top: 1vh;
+}
+
+.mensagem{
+    border-bottom: 1px solid rgb(255, 255, 255);
+    padding: 1%;
+}
+
+.estado-usuario{
+    text-align: center;
+    border-bottom: 1px solid rgb(255, 255, 255);
 }
